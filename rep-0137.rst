@@ -128,14 +128,12 @@ The information stored in the master file is:
 
   * release: reference to the release distribution file
   * release_build: list of references to the build files used to build the binary packages
+  * release_cache: reference to a release distribution cache
   * test: reference to the distribution file used for tests
   * test_build: list of references to the build file used to run the tests
   * doc_folder: a reference to the documentation folder. The full specification of this folder
     does not belong to the scope of this REP and is considered an implementation
     detail.  In the future it might utilize a similar infrastructure to release and test files. 
-  * distribution_cache: reference to a distribution cache. Whether this field is
-    a dictionary, a list or a scalar is left as an implementation detail. The
-    following examples will assume that the implementation necessitates an url.
 
 * type: must be 'master'
 * version: version number, this REP describes version 1
@@ -155,10 +153,10 @@ A master file referencing multiple distribution and build files.
     groovy:
       release: releases/groovy.yaml
       release_build: [releases/groovy-build-ubuntu.yaml, releases/groovy-build-arm.yaml]
+      release_cache: http://www.example.com/groovy-distribution-cache
       test: tests/groovy.yaml
       test_build: [tests/groovy-build.yaml]
       doc_folder: doc/groovy
-      distribution_cache: http://www.example.com/groovy-distribution-cache
     hydro:
       ...
   type: master
@@ -321,7 +319,7 @@ The directory contains .rosinstall files which list repositories which should be
 
 Distribution cache file
 -----------------------
-Collection of all meta information of the ROS distribution, including all the information from the package.xml files.
+Collection of a ROS release distribution file and the meta information from all package.xml files referenced in there.
 The cache must reference the distribution file and store a hash of the version it was build from to be able to detect if the cache is invalid.
 The format of that cache is considered an implementation detail and is not specified in this REP.
 
@@ -381,10 +379,10 @@ master.yaml:
     foo:
       release: release/foo.yaml
       release_build: [release/foo-build.yaml]
+      release_cache: http://example.com/foo-cache.tar.gz
       test: test/foo.yaml
       test_build: [test/foo-build.yaml]
       doc_folder: doc/
-      distribution_cache: http://example.com/foo-cache.tar.gz
 
 
 release/foo.yaml:
